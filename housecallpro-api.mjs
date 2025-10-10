@@ -107,7 +107,7 @@ export class HouseCallProAPI {
         console.log('Creating customer with payload:', payload);
         const result = await this.apiCall('/customers', 'POST', payload);
         console.log('Customer created:', result);
-        return result.customer;
+        return result;
     }
 
     /**

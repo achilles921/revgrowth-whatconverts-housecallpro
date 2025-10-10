@@ -81,6 +81,43 @@ export const handler = async (event) => {
 };
 
 /**
+ * State name to abbreviation mapping
+ */
+const STATE_ABBREVIATIONS = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+    'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+    'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+    'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+    'District of Columbia': 'DC', 'Puerto Rico': 'PR', 'Guam': 'GU', 'American Samoa': 'AS',
+    'U.S. Virgin Islands': 'VI', 'Northern Mariana Islands': 'MP'
+};
+
+/**
+ * Convert state name to 2-letter abbreviation
+ */
+function normalizeState(state) {
+    if (!state) return null;
+    
+    // If already 2 letters, return as is
+    if (state.length === 2) {
+        return state.toUpperCase();
+    }
+    
+    // Look up full state name (case insensitive)
+    const stateName = Object.keys(STATE_ABBREVIATIONS).find(
+        key => key.toLowerCase() === state.toLowerCase()
+    );
+    
+    return stateName ? STATE_ABBREVIATIONS[stateName] : state;
+}
+
+/**
  * Extract customer data from WhatConverts lead
  */
 function extractCustomerData(leadData) {
@@ -99,7 +136,7 @@ function extractCustomerData(leadData) {
             street: leadData.address || leadData.street || null,
             street_line_2: leadData.address_2 || null,
             city: leadData.city || null,
-            state: leadData.state || null,
+            state: normalizeState(leadData.state),
             zip: leadData.zip || leadData.postal_code || null,
             country: leadData.country || 'US'
         };
