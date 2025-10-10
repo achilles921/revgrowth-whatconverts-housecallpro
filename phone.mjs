@@ -3,9 +3,10 @@ import { parsePhoneNumber } from 'libphonenumber-js'
 export async function validateAndFormatPhone(phone) {
     const phoneNumber = parsePhoneNumber(phone, 'US')
 
-    //if valid - format it to e164, if not return false
+    //if valid - format it to national number (10 digits for US), if not return false
     if (phoneNumber) {
-        return phoneNumber.format('E.164')
+        // Return just the national number without country code (10 digits for US)
+        return phoneNumber.nationalNumber
     } else {
         return false
     }

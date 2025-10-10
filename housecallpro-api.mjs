@@ -127,7 +127,7 @@ export class HouseCallProAPI {
         console.log('Updating customer with payload:', payload);
         const result = await this.apiCall(`/customers/${customerId}`, 'PUT', payload);
         console.log('Customer updated:', result);
-        return result.customer;
+        return result;
     }
 
     /**
