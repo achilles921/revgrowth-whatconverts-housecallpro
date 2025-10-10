@@ -1,0 +1,34 @@
+{
+    "name": "revgrowth-housecallpro-integration",
+    "version": "2.0.0",
+    "description": "AWS Lambda integration platform connecting business platforms with WhatConverts",
+    "main": "index.mjs",
+    "type": "module",
+    "scripts": {
+      "deploy": "powershell -File deploy.ps1",
+      "deploy:bash": "bash deploy.sh",
+      "package": "powershell -Command \"Compress-Archive -Path * -DestinationPath function.zip -Force\"",
+      "logs": "aws logs tail /aws/lambda/$LAMBDA_FUNCTION_NAME --follow",
+      "test:invoke": "aws lambda invoke --function-name $LAMBDA_FUNCTION_NAME --payload file://test/sample-event.json output.json"
+    },
+    "engines": {
+      "node": ">=22.0.0"
+    },
+    "keywords": [
+      "aws-lambda",
+      "integration",
+      "whatconverts",
+      "housecallpro",
+      "salesforce",
+      "square",
+      "quickbooks",
+      "crm",
+      "lead-tracking"
+    ],
+    "dependencies": {
+      "@aws-sdk/client-dynamodb": "^3.656.0",
+      "@aws-sdk/util-dynamodb": "^3.656.0",
+      "libphonenumber-js": "^1.11.9"
+    }
+  }
+  

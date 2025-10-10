@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# Build artifacts
+build/
+dist/
+
+# Lambda deployment
+function.zip
+*.zip
+output.json
+output-*.json
+
+# Logs
+*.log
+
+# Editor-specific files
+.vscode/
+.DS_Store
+
+# Test coverage
+coverage/
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# CloudFormation
+cloudformation/*.out
