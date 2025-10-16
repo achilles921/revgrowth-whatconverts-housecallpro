@@ -59,12 +59,28 @@ export const handler = async (event) => {
         console.log('Creating/updating customer in HouseCallPro:', customerData);
         const customer = await hcpApi.upsertCustomer(customerData);
         console.log('Customer upserted successfully:', customer);
+        
+        // Build lead data with job description and tags
+        const leadDescription = buildJobDescription(leadData);
+        const leadTags = buildTags(leadData);
+
+        const leadPayload = {
+            description: leadDescription,
+            lead_source: leadData.lead_source || 'WhatConverts',
+            tags: leadTags
+        };
+
+        // Create lead in HouseCallPro using customer ID
+        console.log('Creating lead in HouseCallPro for customer:', customer.id);
+        const lead = await hcpApi.createLead(customer.id, leadPayload);
+        console.log('Lead created successfully:', lead);
 
         return {
             statusCode: 200,
             body: JSON.stringify({
                 message: 'Lead processed successfully',
-                customerId: customer.id
+                customerId: customer.id,
+                leadId: lead.id
             })
         };
 

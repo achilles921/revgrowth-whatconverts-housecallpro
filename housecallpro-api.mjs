@@ -147,6 +147,23 @@ export class HouseCallProAPI {
     }
 
     /**
+     * Create a lead in HouseCallPro (appears in Job Inbox as API Lead)
+     */
+    async createLead(customerId, leadData) {
+        const payload = {
+            customer_id: customerId,
+            description: leadData.description || 'Lead from WhatConverts',
+            lead_source: leadData.lead_source || 'WhatConverts',
+            tags: leadData.tags || []
+        };
+
+        console.log('Creating lead with payload:', payload);
+        const result = await this.apiCall('/leads', 'POST', payload);
+        console.log('Lead created:', result);
+        return result;
+    }
+
+    /**
      * Create a job/service request in HouseCallPro
      */
     async createJob(customerId, jobData) {
