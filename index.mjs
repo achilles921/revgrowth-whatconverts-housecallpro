@@ -22,6 +22,13 @@ export const handler = async (event) => {
                 body: JSON.stringify({ error: 'profile_id is required' })
             };
         }
+        if (profileId != 129575) {
+            console.log('Accept webhook only from Coastal Carolina Comfort');
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Accept webhook only from Coastal Carolina Comfort' })
+            };
+        }
 
         if (!houseCallProApiKey) {
             console.error('HouseCallPro API key not configured');
