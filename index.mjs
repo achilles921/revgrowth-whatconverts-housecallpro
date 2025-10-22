@@ -29,6 +29,13 @@ export const handler = async (event) => {
                 body: JSON.stringify({ error: 'Accept webhook only from Coastal Carolina Comfort' })
             };
         }
+        if (event.lead_type != "Web Form") {
+            console.log('Accept lead from Web Form only');
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Accept lead from Web Form only' })
+            };
+        }
 
         if (!houseCallProApiKey) {
             console.error('HouseCallPro API key not configured');
